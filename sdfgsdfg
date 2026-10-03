@@ -1,0 +1,46 @@
+# def o(num):
+#     #прямой
+#     bits = 8
+#     dv = format(num, f"0{bits-1}b")
+#     dv_1 = "1" + dv
+#     #обратный
+#     direct = dv_1
+#     inv = "".join(str(int(not int(b))) for b in direct)
+#     inv = '1' + inv[1:]
+#     #доп код
+#     twos = format(int(inv, 2) + 1, "08b")
+#     return(twos)
+# def k(num):
+#     #прямой
+#     bits = 8
+#     dv = format(num, f"0{bits-1}b")
+#     dv_1 = "0" + dv
+#     #обратный
+#     direct = dv_1
+#     inv = "".join(str(int(not int(b))) for b in direct)
+#     inv = '0' + inv[1:]
+#     #доп код
+#     twos = format(int(inv, 2) + 1, "08b")
+#     return(twos)
+# x1 = int(input())
+# x2 = int(input())
+# print(o(x1), k(x2))
+# a = o(x1)
+# b = k(x2)
+# a = a[::-1] # переварачиваем строки чтобы складывать с последнего разряда
+# b = b[::-1]
+# carry = 0
+# result = []
+# for i in range(max(len(a), len(b))): # перебираем разряды чисел
+#     da = int(a[i]) if i < len(a) else 0 # берём   цифру числа и если разряд закончился то считаеи его равным 0
+#     db = int(b[i]) if i < len(b) else 0
+#     s = da + db + carry
+#     result.append(str(s % 2))
+#     carry = s // 2
+# if carry:
+#     result.append("1")
+# print("".join(reversed(result)))
+# # 101101011 - доп код
+# # 101101010 - обратный код
+# # 010010101 - прямой код
+# # в прямом коде мы получили первый символ - 0, значит число положительное и доп код корректен
