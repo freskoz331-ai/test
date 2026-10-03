@@ -24,6 +24,7 @@ def sm(a: str, b: str, base: int):
         db = int(b[i]) if i < len(b) else 0
         s = da + db + car
         res.append(str(s%base))
+        car = s//base
     if car:
         res.append('1')
     return "".join(reversed(res))
