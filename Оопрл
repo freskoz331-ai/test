@@ -1,83 +1,35 @@
-43
+def tocode(value, bits):
+    if value < 0:
+        abs_value  = abs(value)
+        magnitude = format(abs_value, f"0{bits - 1}b")
+        direct_code = "1" + magnitude
+        inverse_code = "".join("1" if b == "0" else "0" for b in direct_code)
+        inverse = "1" + inverse_code [1:]
+        twos_complement = format(int(inverse, 2) + 1, f"0{bits}b")
+        return [direct_code, inverse, twos_complement]
+    else:
+        magnitude = format(value, f"0{bits - 1}b")
+        direct_code = "0" + magnitude
+        inverse = direct_code
+        twos_complement = format(int(inverse, 2) + 0, f"0{bits}b")
+        return [direct_code, inverse, twos_complement]
 
-def to_code(value: (it), bits):
-
-44
-
-# Функция преобразования отрицательгного числа в 3 кода
-
-if value < 0:
-
-45
-
-abs_value abs(value)
-
-46
-
-47
-
-magnitude = format(abs_value, f"0{bits 1}b")
-
-direct_code = "1" + magnitude
-
-48
-
-49
-
-# в прямой
-
-inverse_code = "".join("1" if b == "0" else "0" for b in direct_code)
-
-50
-
-51
-
-52
-
-53
-
-54
-
-inverse = "1" + inverse_code [1:]
-
-# в обратный
-
-twos_complement = format(int(inverse, 2) + 1, f"0{bits}b")
-
-# в дополнительный
-
-63
-
-return [direct_code, inverse, twos_complement]
-
-else:
-
-55
-
-56
-
-57
-
-58
-
-59
-
-60
-
-61
-
-62
-
-magnitude = format(value, f"0{bits - 1}b")
-
-# также преобразование положительного числа
-
-direct_code = "0" + magnitude
-
-inverse direct_code
-
-twos_complement = format(int(inverse, 2) + 0, f"0{bits}b")
-
-return [direct_code, inverse, twos_complement]
-
-print(to_code(-15, bits: 8))
+def sm(a: str, b: str, base: int):
+    a = a[::-1]
+    b = b[::-1]
+    car = 0
+    res = []
+    for i in range(max(len(a), len(b))):
+        da = int(a[i]) if i < len(a) else 0
+        db = int(b[i]) if i < len(b) else 0
+        s = da + db + car
+        res.append(str(s%base))
+    if car:
+        res.append('1')
+    return "".join(reversed(res))
+a = (tocode(-15, 8))[2]
+b = (tocode(15, 8))[2]
+res1 = sm(a, b, 2)
+if len(res1)>len(a):
+    res1 = res1[1:]
+print(int(res1, 2))
