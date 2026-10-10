@@ -1,0 +1,88 @@
+#1
+# x = float(input('число '))
+# fraction_bits = int(input('биты '))
+
+# scaled = int(round(x * (2 ** fraction_bits)))
+# binary = format(scaled, "08b")
+
+# print(binary)
+# # число 3.625
+# # биты 4
+# # 00111010
+
+#2
+# x = float(input('число '))
+# fraction_bits = int(input('биты '))
+# scaled = int(round(x * (2 ** fraction_bits)))
+# binary = format(scaled, "08b")
+# print(binary)
+# value = int(binary, 2) / (2 ** fraction_bits)
+# print(value)
+# # число 3.625
+# # биты 4
+# # 00111010
+# # 3.625
+
+#3
+# for x in [6.26]:
+#     for fraction_bits in [2, 4, 8, 16]:
+#         scaled = int(round(x * (2 ** fraction_bits)))
+#         binary = format(scaled, "08b")
+#         print(binary)
+#         value = int(binary, 2) / (2 ** fraction_bits)
+#         print(value)
+# # 00011001
+# # 6.25
+# # 01100100
+# # 6.25
+# # 11001000011
+# # 6.26171875
+# # 1100100001010001111
+# # 6.2599945068359375
+
+#4
+# import math
+# x = float(input())
+# mantissa, exponent = math.frexp(x)
+# print(mantissa, exponent)
+# # 10.5
+# # 0.65625 4
+
+#5
+# import math
+# x = float(input("Введите число: "))
+# mantissa, exponent = math.frexp(x)
+# print("Мантисса:", mantissa)
+# print("Порядок:", exponent)
+# # Введите число: 12.12
+# # Мантисса: 0.7575
+# # Порядок: 4
+
+#6
+# x = 67.52
+# fraction_bits = 8
+# scaled = int(round(x * (2 ** fraction_bits)))
+# binary = format(scaled, "08b")
+# value = int(binary, 2) / (2 ** fraction_bits)
+# print(value)
+# import math
+# mantissa, exponent = math.frexp(x)
+# ans = mantissa * 2**exponent
+# print(ans)
+# # 67.51953125
+# # 67.52
+
+#7
+# x = [0.01] * 100
+# cor = 0.01 * 100
+# ans = 0
+# for i in x:
+#     ans += i
+# print(ans, cor)
+# 1.0000000000000007 1.0
+
+#8
+# a = 0.1 + 0.4 - 0.2
+# b = 0.1 + (0.4 - 0.2)
+# print(a, b)
+# 0.3 0.30000000000000004
