@@ -1,14 +1,16 @@
 #1
 # x = float(input('число '))
-# fraction_bits = int(input('биты '))
+# for fraction_bits in [2, 4, 8, 16]:
 
-# scaled = int(round(x * (2 ** fraction_bits)))
-# binary = format(scaled, "08b")
+#     scaled = int(round(x * (2 ** fraction_bits)))
+#     binary = format(scaled, "08b")
 
-# print(binary)
-# # число 3.625
-# # биты 4
-# # 00111010
+#     print(binary, fraction_bits)
+# # число 10.75
+# # 00101011 2
+# # 10101100 4
+# # 101011000000 8
+# # 10101100000000000000 16
 
 #2
 # x = float(input('число '))
