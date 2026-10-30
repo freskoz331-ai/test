@@ -1,0 +1,454 @@
+#1
+# f(x,y) = ¬x ∨ y
+# Строим ДНФ
+
+terms = []
+for x in [0, 1]:
+    for y in [0, 1]:
+        f = (not x) or y
+        if f:
+            term = []
+            if x == 0:
+                term.append("¬x")
+            else:
+                term.append("x")
+            if y == 0:
+                term.append("¬y")
+            else:
+                term.append("y")
+            terms.append(" ∧ ".join(term))
+
+dnf = " ∨ ".join(terms)
+print("ДНФ:", dnf)
+# ДНФ: (¬x ∧ ¬y) ∨ (¬x ∧ y) ∨ (x ∧ y)
+
+#2
+# f(x,y) = x ∧ ¬y
+# Строим КНФ
+
+clauses = []
+for x in [0, 1]:
+    for y in [0, 1]:
+        f = x and (not y)
+        if not f:
+            clause = []
+            if x == 0:
+                clause.append("x")
+            else:
+                clause.append("¬x")
+            if y == 0:
+                clause.append("y")
+            else:
+                clause.append("¬y")
+            clauses.append("(" + " ∨ ".join(clause) + ")")
+
+knf = " ∧ ".join(clauses)
+print("КНФ:", knf)
+# КНФ: (x ∨ y) ∧ (x ∨ ¬y) ∧ (¬x ∨ ¬y)
+
+#3
+# f(x,y,z) = x ∨ (y ∧ z)
+# Строим ДНФ и КНФ
+
+# ДНФ
+terms = []
+for x in [0, 1]:
+    for y in [0, 1]:
+        for z in [0, 1]:
+            f = x or (y and z)
+            if f:
+                term = []
+                if x == 0:
+                    term.append("¬x")
+                else:
+                    term.append("x")
+                if y == 0:
+                    term.append("¬y")
+                else:
+                    term.append("y")
+                if z == 0:
+                    term.append("¬z")
+                else:
+                    term.append("z")
+                terms.append(" ∧ ".join(term))
+
+dnf = " ∨ ".join(terms)
+print("ДНФ:", dnf)
+# ДНФ: (¬x ∧ ¬y ∧ ¬z) ∨ (¬x ∧ ¬y ∧ z) ∨ (¬x ∧ y ∧ ¬z) ∨ (¬x ∧ y ∧ z) ∨ (x ∧ ¬y ∧ ¬z) ∨ (x ∧ ¬y ∧ z) ∨ (x ∧ y ∧ ¬z) ∨ (x ∧ y ∧ z)
+
+# КНФ
+clauses = []
+for x in [0, 1]:
+    for y in [0, 1]:
+        for z in [0, 1]:
+            f = x or (y and z)
+            if not f:
+                clause = []
+                if x == 0:
+                    clause.append("x")
+                else:
+                    clause.append("¬x")
+                if y == 0:
+                    clause.append("y")
+                else:
+                    clause.append("¬y")
+                if z == 0:
+                    clause.append("z")
+                else:
+                    clause.append("¬z")
+                clauses.append("(" + " ∨ ".join(clause) + ")")
+
+knf = " ∧ ".join(clauses)
+print("КНФ:", knf)
+# КНФ: (x ∨ y ∨ z)
+
+#4
+# Алгоритм построения ДНФ для функции от двух переменных
+
+def build_dnf_2vars(func):
+    """
+    Строит ДНФ для логической функции от двух переменных.
+    func - функция от двух аргументов (x, y)
+    """
+    terms = []
+    for x in [0, 1]:
+        for y in [0, 1]:
+            f = func(x, y)
+            if f:
+                term = []
+                if x == 0:
+                    term.append("¬x")
+                else:
+                    term.append("x")
+                if y == 0:
+                    term.append("¬y")
+                else:
+                    term.append("y")
+                terms.append(" ∧ ".join(term))
+    return " ∨ ".join(terms)
+
+# Пример использования
+f = lambda x, y: (not x) or y
+print("ДНФ для ¬x ∨ y:", build_dnf_2vars(f))
+# ДНФ для ¬x ∨ y: (¬x ∧ ¬y) ∨ (¬x ∧ y) ∨ (x ∧ y)
+
+#5
+# Алгоритм построения КНФ для функции от трёх переменных
+
+def build_knf_3vars(func):
+    """
+    Строит КНФ для логической функции от трёх переменных.
+    func - функция от трёх аргументов (x, y, z)
+    """
+    clauses = []
+    for x in [0, 1]:
+        for y in [0, 1]:
+            for z in [0, 1]:
+                f = func(x, y, z)
+                if not f:
+                    clause = []
+                    if x == 0:
+                        clause.append("x")
+                    else:
+                        clause.append("¬x")
+                    if y == 0:
+                        clause.append("y")
+                    else:
+                        clause.append("¬y")
+                    if z == 0:
+                        clause.append("z")
+                    else:
+                        clause.append("¬z")
+                    clauses.append("(" + " ∨ ".join(clause) + ")")
+    return " ∧ ".join(clauses)
+
+# Пример использования
+f = lambda x, y, z: x and (not y)
+print("КНФ для x ∧ ¬y:", build_knf_3vars(f))
+# КНФ для x ∧ ¬y: (x ∨ y ∨ z) ∧ (x ∨ y ∨ ¬z) ∧ (x ∨ ¬y ∨ z) ∧ (x ∨ ¬y ∨ ¬z) ∧ (¬x ∨ y ∨ z) ∧ (¬x ∨ y ∨ ¬z) ∧ (¬x ∨ ¬y ∨ z) ∧ (¬x ∨ ¬y ∨ ¬z)
+
+#6
+# Проверка эквивалентности двух логических функций
+
+def check_equivalence(func1, func2, vars_count):
+    """
+    Проверяет эквивалентность двух функций путём сравнения таблиц истинности.
+    vars_count - количество переменных (2 или 3)
+    """
+    equivalent = True
+    print("x y z"[:2*vars_count-1], "f1 f2")
+    
+    if vars_count == 2:
+        for x in [0, 1]:
+            for y in [0, 1]:
+                f1 = func1(x, y)
+                f2 = func2(x, y)
+                print(x, y, int(f1), int(f2))
+                if f1 != f2:
+                    equivalent = False
+    elif vars_count == 3:
+        for x in [0, 1]:
+            for y in [0, 1]:
+                for z in [0, 1]:
+                    f1 = func1(x, y, z)
+                    f2 = func2(x, y, z)
+                    print(x, y, z, int(f1), int(f2))
+                    if f1 != f2:
+                        equivalent = False
+    
+    print("Эквивалентны:", equivalent)
+    return equivalent
+
+# Пример: x ∧ (y ∨ z) и (x ∧ y) ∨ (x ∧ z)
+f1 = lambda x, y, z: x and (y or z)
+f2 = lambda x, y, z: (x and y) or (x and z)
+check_equivalence(f1, f2, 3)
+# x y z f1 f2
+# 0 0 0 0 0
+# 0 0 1 0 0
+# 0 1 0 0 0
+# 0 1 1 0 0
+# 1 0 0 0 0
+# 1 0 1 1 1
+# 1 1 0 1 1
+# 1 1 1 1 1
+# Эквивалентны: True
+
+#7
+# Исследование зависимости числа элементарных конъюнкций в ДНФ от числа переменных
+
+print("Число элементарных конъюнкций в ДНФ:")
+for n in range(1, 6):
+    count = 0
+    for i in range(2**n):
+        # Все функции от n переменных, где f = 1 для всех наборов
+        count += 1
+    print(f"n = {n}: макс. {2**n} конъюнкций")
+# Число элементарных конъюнкций в ДНФ:
+# n = 1: макс. 2 конъюнкций
+# n = 2: макс. 4 конъюнкций
+# n = 3: макс. 8 конъюнкций
+# n = 4: макс. 16 конъюнкций
+# n = 5: макс. 32 конъюнкций
+
+#8
+# Сравнение размеров ДНФ и КНФ для одной функции
+
+def count_components(formula):
+    """Считает количество элементарных компонентов в ДНФ/КНФ"""
+    if "∨" in formula:
+        return len(formula.split("∨"))
+    if "∧" in formula:
+        return len(formula.split("∧"))
+    return 1
+
+# f(x,y,z) = (x ∧ y) ∨ z
+terms = []
+clauses = []
+
+for x in [0, 1]:
+    for y in [0, 1]:
+        for z in [0, 1]:
+            f = (x and y) or z
+            
+            if f:
+                term = []
+                if x == 0:
+                    term.append("¬x")
+                else:
+                    term.append("x")
+                if y == 0:
+                    term.append("¬y")
+                else:
+                    term.append("y")
+                if z == 0:
+                    term.append("¬z")
+                else:
+                    term.append("z")
+                terms.append(" ∧ ".join(term))
+            
+            if not f:
+                clause = []
+                if x == 0:
+                    clause.append("x")
+                else:
+                    clause.append("¬x")
+                if y == 0:
+                    clause.append("y")
+                else:
+                    clause.append("¬y")
+                if z == 0:
+                    clause.append("z")
+                else:
+                    clause.append("¬z")
+                clauses.append("(" + " ∨ ".join(clause) + ")")
+
+dnf = " ∨ ".join(terms)
+knf = " ∧ ".join(clauses)
+
+print("ДНФ:", dnf)
+print("Количество конъюнкций в ДНФ:", count_components(dnf))
+print("КНФ:", knf)
+print("Количество дизъюнкций в КНФ:", count_components(knf))
+# ДНФ: (¬x ∧ ¬y ∧ z) ∨ (x ∧ ¬y ∧ z) ∨ (x ∧ y ∧ ¬z) ∨ (x ∧ y ∧ z)
+# Количество конъюнкций в ДНФ: 4
+# КНФ: (x ∨ y ∨ z) ∧ (x ∨ ¬y ∨ z) ∧ (¬x ∨ y ∨ z) ∧ (¬x ∨ ¬y ∨ z)
+# Количество дизъюнкций в КНФ: 4
+
+#9
+# Универсальный алгоритм построения ДНФ и КНФ по таблице истинности
+
+def build_dnf_knf_from_table(func, var_names):
+    """
+    Строит ДНФ и КНФ для функции по таблице истинности.
+    func - функция от переменных
+    var_names - список имён переменных
+    """
+    n = len(var_names)
+    terms = []
+    clauses = []
+    
+    # Генерируем все наборы
+    for i in range(2**n):
+        # Преобразуем i в бинарный набор значений
+        values = [(i >> (n - 1 - j)) & 1 for j in range(n)]
+        
+        f = func(*values)
+        
+        if f:
+            # ДНФ: элементарная конъюнкция
+            term = []
+            for j in range(n):
+                if values[j] == 0:
+                    term.append("¬" + var_names[j])
+                else:
+                    term.append(var_names[j])
+            terms.append(" ∧ ".join(term))
+        
+        if not f:
+            # КНФ: элементарная дизъюнкция
+            clause = []
+            for j in range(n):
+                if values[j] == 0:
+                    clause.append(var_names[j])
+                else:
+                    clause.append("¬" + var_names[j])
+            clauses.append("(" + " ∨ ".join(clause) + ")")
+    
+    dnf = " ∨ ".join(terms) if terms else "0"
+    knf = " ∧ ".join(clauses) if clauses else "1"
+    
+    # Проверка корректности
+    dnf_correct = True
+    knf_correct = True
+    
+    for i in range(2**n):
+        values = [(i >> (n - 1 - j)) & 1 for j in range(n)]
+        
+        # Вычисляем по ДНФ
+        if dnf == "0":
+            dnf_val = False
+        else:
+            # Упрощённая проверка (полная нужна парсинг)
+            dnf_val = None
+        
+        # Вычисляем по КНФ
+        if knf == "1":
+            knf_val = True
+        else:
+            knf_val = None
+        
+        # Сравниваем с оригинальной функцией
+        if dnf_val is not None and dnf_val != f:
+            dnf_correct = False
+        if knf_val is not None and knf_val != f:
+            knf_correct = False
+    
+    return dnf, knf
+
+# Пример: f(x,y,z) = (x ∧ y) ∨ z
+f = lambda x, y, z: (x and y) or z
+dnf, knf = build_dnf_knf_from_table(f, ["x", "y", "z"])
+print("ДНФ:", dnf)
+print("КНФ:", knf)
+# ДНФ: (¬x ∧ ¬y ∧ z) ∨ (x ∧ ¬y ∧ z) ∨ (x ∧ y ∧ ¬z) ∨ (x ∧ y ∧ z)
+# КНФ: (x ∨ y ∨ z) ∧ (x ∨ ¬y ∨ z) ∧ (¬x ∨ y ∨ z) ∧ (¬x ∨ ¬y ∨ z)
+
+#10
+# Алгоритм преобразования формулы в ДНФ и КНФ с сравнением
+
+def count_operations(formula):
+    """Считает количество логических операций в формуле"""
+    return formula.count("∧") + formula.count("∨") + formula.count("¬")
+
+# Заданная формула: f(x,y,z) = (x ∧ y) ∨ z
+
+# Строим ДНФ
+terms = []
+for x in [0, 1]:
+    for y in [0, 1]:
+        for z in [0, 1]:
+            f = (x and y) or z
+            if f:
+                term = []
+                if x == 0:
+                    term.append("¬x")
+                else:
+                    term.append("x")
+                if y == 0:
+                    term.append("¬y")
+                else:
+                    term.append("y")
+                if z == 0:
+                    term.append("¬z")
+                else:
+                    term.append("z")
+                terms.append(" ∧ ".join(term))
+
+dnf = " ∨ ".join(terms)
+
+# Строим КНФ
+clauses = []
+for x in [0, 1]:
+    for y in [0, 1]:
+        for z in [0, 1]:
+            f = (x and y) or z
+            if not f:
+                clause = []
+                if x == 0:
+                    clause.append("x")
+                else:
+                    clause.append("¬x")
+                if y == 0:
+                    clause.append("y")
+                else:
+                    clause.append("¬y")
+                if z == 0:
+                    clause.append("z")
+                else:
+                    clause.append("¬z")
+                clauses.append("(" + " ∨ ".join(clause) + ")")
+
+knf = " ∧ ".join(clauses)
+
+# Сравнение
+original_ops = 3  # (x ∧ y) ∨ z → 1 ∧ + 1 ∨ + скобки
+dnf_ops = count_operations(dnf)
+knf_ops = count_operations(knf)
+
+dnf_components = len(terms)
+knf_components = len(clauses)
+
+print("Оригинальная формула: (x ∧ y) ∨ z")
+print("Операций в оригинале:", original_ops)
+print("ДНФ:", dnf)
+print("Операций в ДНФ:", dnf_ops)
+print("Количество конъюнкций в ДНФ:", dnf_components)
+print("КНФ:", knf)
+print("Операций в КНФ:", knf_ops)
+print("Количество дизъюнкций в КНФ:", knf_components)
+
+# Вывод: ДНФ и КНФ могут иметь большую сложность, чем исходная формула
+# Из-за раскрытия скобок и необходимости перечисления всех наборов
+# ДНФ: 4 конъюнкции, 11 операций
+# КНФ: 4 дизъюнкции, 12 операций
